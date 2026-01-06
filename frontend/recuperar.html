@@ -73,7 +73,7 @@
             position: relative;
             border-radius: 24px;
             padding: 2.5rem;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .auth-card::before {
@@ -285,6 +285,60 @@
             display: block;
         }
 
+        .input-wrapper {
+            position: relative;
+        }
+
+        .tooltip-custom {
+            position: fixed; 
+            left: auto; 
+            bottom: auto; 
+            transform: translateY(-50%);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            color: #f8fafc;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            margin-bottom: 0; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            min-width: 250px;
+        }
+
+        .tooltip-custom::after {
+            content: '';
+            position: absolute;
+            right: 100%; 
+            top: 50%;
+            transform: translateY(-50%);
+            border: 8px solid transparent;
+            border-right-color: rgba(15, 23, 42, 0.95);
+        }
+
+        .input-wrapper:hover .tooltip-custom,
+        .form-control:focus + .tooltip-custom {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .tooltip-custom ul {
+            margin: 0;
+            padding-left: 1.2rem;
+            list-style: none;
+        }
+
+        .tooltip-custom li::before {
+            content: '✓';
+            color: #f59e0b;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
         @media (max-width: 480px) {
             .auth-card {
                 padding: 2rem 1.5rem;
@@ -292,6 +346,37 @@
 
             .auth-header h1 {
                 font-size: 1.75rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .tooltip-custom {
+                position: absolute !important;
+                left: 0 !important;
+                right: 0 !important;
+                top: calc(100% + 10px) !important;
+                bottom: auto !important;
+                transform: none !important;
+                min-width: auto;
+                white-space: normal;
+                width: 100%;
+            }
+
+            .tooltip-custom::after {
+                right: auto !important;
+                left: 20px !important;
+                top: -8px !important;
+                bottom: auto !important;
+                transform: none !important;
+                border: 8px solid transparent;
+                border-bottom-color: rgba(15, 23, 42, 0.95) !important;
+                border-right-color: transparent !important;
+                border-top-color: transparent !important;
+            }
+
+            .input-wrapper:hover .tooltip-custom,
+            .form-control:focus ~ .tooltip-custom {
+                opacity: 1;
+                visibility: visible;
             }
         }
     </style>
@@ -306,7 +391,7 @@
                 <div class="auth-logo">🔑</div>
                 <h1>Recuperar Acceso</h1>
                 <span class="tech-slogan">Reset Your Credentials</span>
-                <p>Ingresa tu email para recuperar tu contraseña</p>
+                <p id="stepDescription">Ingresa tu email para recuperar tu contraseña</p>
             </div>
 
             <div class="step-indicator">
@@ -354,24 +439,42 @@
                 <form class="auth-form" id="resetForm">
                     <div class="mb-3">
                         <label for="newPassword" class="form-label">NUEVA CONTRASEÑA</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control" id="newPassword"
-                                placeholder="Ej: MiNuevaClave123" required minlength="8">
-                            <button class="btn btn-outline-secondary" type="button" id="toggleNewPassword">
-                                👁️
-                            </button>
+                        <div class="input-wrapper">
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="newPassword"
+                                    placeholder="Ej: MiNuevaClave123" required minlength="8">
+                                <button class="btn btn-outline-secondary" type="button" id="toggleNewPassword">
+                                    👁️
+                                </button>
+                            </div>
+                            <div class="tooltip-custom">
+                                <strong>Requisitos de contraseña:</strong>
+                                <ul>
+                                    <li>Mínimo 8 caracteres</li>
+                                    <li>Al menos 1 letra mayúscula</li>
+                                    <li>Al menos 1 letra minúscula</li>
+                                    <li>Al menos 1 número</li>
+                                </ul>
+                            </div>
                         </div>
-                        <small class="text-muted">Mín. 8 caracteres, 1 mayúscula, 1 minúscula, 1 número</small>
                     </div>
 
                     <div class="mb-3">
                         <label for="confirmNewPassword" class="form-label">CONFIRMAR CONTRASEÑA</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control" id="confirmNewPassword"
-                                placeholder="Repetir nueva contraseña" required minlength="8">
-                            <button class="btn btn-outline-secondary" type="button" id="toggleConfirmNewPassword">
-                                👁️
-                            </button>
+                        <div class="input-wrapper">
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="confirmNewPassword"
+                                    placeholder="Repetir nueva contraseña" required minlength="8">
+                                <button class="btn btn-outline-secondary" type="button" id="toggleConfirmNewPassword">
+                                    👁️
+                                </button>
+                            </div>
+                            <div class="tooltip-custom">
+                                <strong>Confirmar contraseña:</strong>
+                                <ul>
+                                    <li>Debe coincidir con la contraseña anterior</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
@@ -410,6 +513,15 @@
             for (let i = 1; i < stepNumber; i++) {
                 document.getElementById(`step${i}`).classList.add('completed');
             }
+
+            // Cambiar texto según el paso
+            const descriptions = {
+                1: 'Ingresa tu email para recuperar tu contraseña',
+                2: 'Ingresa el código que enviamos a tu correo',
+                3: 'Crea una nueva contraseña segura'
+            };
+            
+            document.getElementById('stepDescription').textContent = descriptions[stepNumber];
         }
 
         // PASO 1: Solicitar recuperación
@@ -540,6 +652,32 @@
             pwd.type = pwd.type === 'password' ? 'text' : 'password';
             this.textContent = pwd.type === 'password' ? '👁️' : '🙈';
         });
+
+        function positionTooltips() {
+            document.querySelectorAll('.input-wrapper').forEach(wrapper => {
+                const input = wrapper.querySelector('.form-control');
+                const tooltip = wrapper.querySelector('.tooltip-custom');
+                
+                if (input && tooltip) {
+                    input.addEventListener('mouseenter', () => {
+                        const rect = input.getBoundingClientRect();
+                        tooltip.style.left = `${rect.right + 15}px`;
+                        tooltip.style.top = `${rect.top + (rect.height / 2)}px`;
+                    });
+                    
+                    input.addEventListener('focus', () => {
+                        const rect = input.getBoundingClientRect();
+                        tooltip.style.left = `${rect.right + 15}px`;
+                        tooltip.style.top = `${rect.top + (rect.height / 2)}px`;
+                    });
+                }
+            });
+        }
+
+        positionTooltips();
+
+        window.addEventListener('scroll', positionTooltips);
+        window.addEventListener('resize', positionTooltips);
     </script>
 </body>
 

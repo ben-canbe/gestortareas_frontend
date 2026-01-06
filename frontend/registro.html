@@ -257,6 +257,21 @@
             right: -60px;
         }
 
+        .form-hint {
+            font-size: 0.65rem;
+            color: rgba(148, 163, 184, 0.6); 
+            margin-left: 0.5rem;
+            font-weight: 400;
+        }
+
+        .password-hint {
+            font-size: 0.75rem;
+            color: rgba(148, 163, 184, 0.6);
+            margin-top: 0.5rem;
+            text-align: center;
+            font-weight: 400;
+        }
+
         @media (max-width: 480px) {
             .auth-card {
                 padding: 2rem 1.5rem;
@@ -287,9 +302,9 @@
             <form class="auth-form" id="registerForm">
                 <!-- Nombre de Usuario -->
                 <div class="mb-3">
-                    <label for="nombre_usuario" class="form-label">NOMBRE_USUARIO <small class="text-muted">(mín. 3
-                            caracteres, solo letras, números y _)</small></label>
-                    <input type="text" class="form-control" id="nombre_usuario" placeholder="Ej: juan_perez123" required
+                    <label for="nombre_usuario" class="form-label">NOMBRE DE USUARIO <small class="form-hint">(mín. 3
+                            caracteres, letras, números y _)</small></label>
+                    <input type="text" class="form-control" id="nombre_usuario" placeholder="juan_perez123" required
                         autocomplete="username" maxlength="50" minlength="3">
                 </div>
 
@@ -309,33 +324,37 @@
 
                 <!-- Email -->
                 <div class="mb-3">
-                    <label for="email" class="form-label">CORREO_ELECTRÓNICO</label>
+                    <label for="email" class="form-label">CORREO ELECTRÓNICO</label>
                     <input type="email" class="form-control" id="email" placeholder="usuario@dominio.com" required
                         autocomplete="email" maxlength="100">
                 </div>
 
                 <!-- Contraseñas -->
-                <div class="row">
-                    <div class="col-6 mb-3">
-                        <label for="password" class="form-label">CONTRASEÑA</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control" id="password" placeholder="Ej: MiClave123"
-                                required autocomplete="new-password" minlength="8">
-                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                👁️
-                            </button>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="password" class="form-label">CONTRASEÑA</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password" placeholder="MiClave123"
+                                    required autocomplete="new-password" minlength="8">
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                    👁️
+                                </button>
+                            </div>
                         </div>
-                        <small class="text-muted">Mín. 8 caracteres, 1 mayúscula, 1 minúscula, 1 número</small>
+                        <div class="col-6">
+                            <label for="confirmPassword" class="form-label">CONFIRMAR CONTRASEÑA</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="confirmPassword"
+                                    placeholder="Repetir contraseña" required autocomplete="new-password" minlength="8">
+                                <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
+                                    👁️
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-6 mb-3">
-                        <label for="confirmPassword" class="form-label">CONFIRMAR</label>
-                        <div class="input-group">
-                            <input type="password" class="form-control" id="confirmPassword"
-                                placeholder="Repetir contraseña" required autocomplete="new-password" minlength="8">
-                            <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
-                                👁️
-                            </button>
-                        </div>
+                    <div class="password-hint">
+                        Mín. 8 caracteres, 1 mayúscula, 1 minúscula, 1 número
                     </div>
                 </div>
 

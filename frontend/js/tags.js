@@ -4,7 +4,7 @@
 let tags = [];
 let selectedTaskTags = []; //
 
- Etiquetas seleccionadas para la tarea actual
+// Etiquetas seleccionadas para la tarea actual
 
 // Colores predefinidos
 const defaultTagColors = [

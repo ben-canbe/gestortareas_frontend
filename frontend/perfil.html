@@ -34,9 +34,6 @@
                         <a class="nav-link" href="index.html">Tareas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="estadisticas.html">Estadísticas</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link active" href="perfil.html">Perfil</a>
                     </li>
                     <li class="nav-item">
@@ -77,14 +74,14 @@
                 <!-- Tarjeta de Información Personal -->
                 <div class="card glass-effect mb-4">
                     <div class="card-body">
-                        <h5 class="card-title mb-4">Información Personal</h5>
+                        <h5 class="card-title mb-4" style="color: #94a3b8;">Información Personal</h5>
                         <form id="profileForm">
                             <!-- Nombre de Usuario (solo lectura) -->
                             <div class="mb-3">
                                 <label for="nombre_usuario" class="form-label">Nombre de Usuario</label>
                                 <input type="text" class="form-control" id="nombre_usuario" placeholder="nombre_usuario"
                                     readonly style="background-color: rgba(0,0,0,0.2); cursor: not-allowed;">
-                                <small class="text-muted">El nombre de usuario no se puede cambiar</small>
+                                <small class="form-label" style="opacity: 0.4;">El nombre de usuario no se puede cambiar</small>
                             </div>
 
                             <!-- Nombres y Apellidos -->
@@ -118,7 +115,7 @@
                 <!-- Tarjeta de Cambiar Contraseña -->
                 <div class="card glass-effect">
                     <div class="card-body">
-                        <h5 class="card-title mb-4">Cambiar Contraseña</h5>
+                        <h5 class="card-title mb-4" style="color: #94a3b8;">Cambiar Contraseña</h5>
                         <form id="passwordForm">
                             <div class="mb-3">
                                 <label for="currentPassword" class="form-label">Contraseña Actual</label>
